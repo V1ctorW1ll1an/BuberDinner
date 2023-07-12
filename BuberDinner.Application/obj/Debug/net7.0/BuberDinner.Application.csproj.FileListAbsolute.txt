@@ -1,0 +1,15 @@
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/bin/Debug/net7.0/BuberDinner.Application.deps.json
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/bin/Debug/net7.0/BuberDinner.Application.dll
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/bin/Debug/net7.0/BuberDinner.Application.pdb
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.csproj.AssemblyReference.cache
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.AssemblyInfoInputs.cache
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.AssemblyInfo.cs
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.csproj.CoreCompileInputs.cache
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.dll
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/refint/BuberDinner.Application.dll
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.pdb
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/ref/BuberDinner.Application.dll
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/bin/Debug/net7.0/BuberDinner.Domain.dll
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/bin/Debug/net7.0/BuberDinner.Domain.pdb
+/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/obj/Debug/net7.0/BuberDinner.Application.csproj.CopyComplete

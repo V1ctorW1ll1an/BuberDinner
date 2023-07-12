@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Y+qwdtOSrT0yWOUsdG3yFWHU36K5D7QHdkXsriTHqjtgqp+tlVFKDZmcFUa9T86XPa4hswlfixyfaaF3ltYniA==",
+  "success": true,
+  "projectFilePath": "/Users/victorwillian/github/dotnet/youtube/CleanArchFromScrach/BuberDinner/BuberDinner.Application/BuberDinner.Application.csproj",
+  "expectedPackageFiles": [
+    "/Users/victorwillian/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
