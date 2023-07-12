@@ -1,14 +1,17 @@
 using BuberDinner.Application.Common.Interfaces.Authentication;
+using BuberDinner.Application.Common.Interfaces.Persistence;
 
 namespace BuberDinner.Application.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
     private readonly IJwtTokenGenerator _tokenGenerator;
+    private readonly IUserRepository _userRepoitory;
 
-    public AuthenticationService(IJwtTokenGenerator tokenGenerator)
+    public AuthenticationService(IJwtTokenGenerator tokenGenerator, IUserRepository userRepository)
     {
         _tokenGenerator = tokenGenerator;
+        _userRepoitory = userRepository;
     }
 
     public AuthenticationResult Login(string email, string password)
