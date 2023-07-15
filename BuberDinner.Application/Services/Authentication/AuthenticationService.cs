@@ -1,22 +1,39 @@
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
+using BuberDinner.Domain.Entities;
 
 namespace BuberDinner.Application.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
     private readonly IJwtTokenGenerator _tokenGenerator;
-    private readonly IUserRepository _userRepoitory;
+    private readonly IUserRepository _userRepository;
 
     public AuthenticationService(IJwtTokenGenerator tokenGenerator, IUserRepository userRepository)
     {
         _tokenGenerator = tokenGenerator;
-        _userRepoitory = userRepository;
+        _userRepository = userRepository;
     }
 
     public AuthenticationResult Login(string email, string password)
     {
-        return new AuthenticationResult(Guid.NewGuid(), "John", "Doe", "john@teste.com", "token");
+        // check if user exists
+        if (_userRepository.GetUserByEmail(email) is not User user)
+        {
+            throw new Exception("Invalid email or password");
+        }
+
+        // check password
+        if (user.Password != password)
+        {
+            throw new Exception("Invalid email or password");
+        }
+
+        // generate token
+        var token = _tokenGenerator.GenerateToken(user);
+
+        // set token
+        return new AuthenticationResult(user, token);
     }
 
     public AuthenticationResult Register(
@@ -27,10 +44,23 @@ public class AuthenticationService : IAuthenticationService
     )
     {
         // check if user exists
-        // create user (unique id)
+        if (_userRepository.GetUserByEmail(email) is not null)
+        {
+            throw new Exception("User already exists");
+        }
+        // create user (unique id) and Persist in Db
+        var user = new User
+        {
+            FirstName = firstName,
+            LastName = lastName,
+            Email = email,
+            Password = password
+        };
+
+        _userRepository.Add(user);
+
         // generate token
-        var userId = Guid.NewGuid();
-        var token = _tokenGenerator.GenerateToken(userId, firstName, lastName);
-        return new AuthenticationResult(userId, firstName, lastName, email, token);
+        var token = _tokenGenerator.GenerateToken(user);
+        return new AuthenticationResult(user, token);
     }
 }
