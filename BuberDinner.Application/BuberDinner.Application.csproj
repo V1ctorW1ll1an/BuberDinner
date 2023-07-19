@@ -11,5 +11,23 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Authentication\" />
+    <None Remove="Authentication\Commands\" />
+    <None Remove="Authentication\Commands\Register\" />
+    <None Remove="Authentication\Queries\" />
+    <None Remove="Authentication\Queries\Login\" />
+    <None Remove="Authentication\Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authentication\" />
+    <Folder Include="Authentication\Commands\" />
+    <Folder Include="Authentication\Commands\Register\" />
+    <Folder Include="Authentication\Queries\" />
+    <Folder Include="Authentication\Queries\Login\" />
+    <Folder Include="Authentication\Common\" />
   </ItemGroup>
 </Project>
