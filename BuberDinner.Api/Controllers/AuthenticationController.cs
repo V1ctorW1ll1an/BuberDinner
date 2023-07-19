@@ -1,8 +1,6 @@
-using BuberDinner.Application.Common.Errors;
 using BuberDinner.Application.Services.Authentication;
 using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using OneOf;
 
 namespace BuberDinner.Api.Controllers;
 
@@ -20,17 +18,21 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        OneOf<AuthenticationResult, IError> result = _authenticationService.Register(
+        var result = _authenticationService.Register(
             request.FirstName,
             request.LastName,
             request.Email,
             request.Password
         );
 
-        return result.Match<IActionResult>(
-            authResult => Ok(MapAuthResult(authResult)),
-            error => Problem(statusCode: (int)error.StatusCode, title: error.ErrorMessage)
-        );
+        if (result.IsFailed)
+        {
+            return Problem(title: "User already exists", statusCode: 409);
+        }
+
+        var response = MapAuthResult(result.Value);
+
+        return Ok(response);
     }
 
     private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)

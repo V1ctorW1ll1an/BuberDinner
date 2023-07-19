@@ -1,10 +1,12 @@
-using System.Net;
+using FluentResults;
 
 namespace BuberDinner.Application.Common.Errors;
 
-public record struct UserAlreadyExistsError : IError
+public class UserAlreadyExistsError : IError
 {
-    public HttpStatusCode StatusCode => HttpStatusCode.Conflict;
+    public List<IError> Reasons => throw new NotImplementedException();
 
-    public string ErrorMessage => "User already exists";
+    public string Message => throw new NotImplementedException();
+
+    public Dictionary<string, object> Metadata => throw new NotImplementedException();
 }

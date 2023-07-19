@@ -2,7 +2,7 @@ using BuberDinner.Application.Common.Errors;
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Domain.Entities;
-using OneOf;
+using FluentResults;
 
 namespace BuberDinner.Application.Services.Authentication;
 
@@ -38,7 +38,7 @@ public class AuthenticationService : IAuthenticationService
         return new AuthenticationResult(user, token);
     }
 
-    public OneOf<AuthenticationResult, IError> Register(
+    public Result<AuthenticationResult> Register(
         string firstName,
         string lastName,
         string email,
@@ -48,7 +48,7 @@ public class AuthenticationService : IAuthenticationService
         // check if user exists
         if (_userRepository.GetUserByEmail(email) is not null)
         {
-            return new UserAlreadyExistsError();
+            return Result.Fail<AuthenticationResult>(new[] { new UserAlreadyExistsError() });
         }
         // create user (unique id) and Persist in Db
         var user = new User
