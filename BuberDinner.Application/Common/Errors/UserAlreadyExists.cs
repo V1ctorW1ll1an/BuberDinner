@@ -1,8 +1,8 @@
 using System.Net;
 
-namespace BuberDinner.Application.Common.Interfaces.Errors;
+namespace BuberDinner.Application.Common.Errors;
 
-public class UserAlreadyExists : Exception, IServiceException
+public record struct UserAlreadyExistsError : IError
 {
     public HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
