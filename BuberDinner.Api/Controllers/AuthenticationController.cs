@@ -1,12 +1,12 @@
 using BuberDinner.Application.Services.Authentication;
 using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using BuberDinner.Domain.Common.Errors;
 
 namespace BuberDinner.Api.Controllers;
 
-[ApiController]
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -18,21 +18,14 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        var result = _authenticationService.Register(
+        ErrorOr.ErrorOr<AuthenticationResult> result = _authenticationService.Register(
             request.FirstName,
             request.LastName,
             request.Email,
             request.Password
         );
 
-        if (result.IsFailed)
-        {
-            return Problem(title: "User already exists", statusCode: 409);
-        }
-
-        var response = MapAuthResult(result.Value);
-
-        return Ok(response);
+        return result.Match(authResult => Ok(MapAuthResult(authResult)), errors => Problem(errors));
     }
 
     private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
@@ -51,14 +44,14 @@ public class AuthenticationController : ControllerBase
     {
         var result = _authenticationService.Login(request.Email, request.Password);
 
-        var response = new AuthenticationResponse(
-            result.User.Id,
-            result.User.FirstName,
-            result.User.LastName,
-            result.User.Email,
-            result.Token
-        );
+        if (result.IsError && result.FirstError == Errors.Authentication.InvalidCredentials)
+        {
+            return Problem(
+                statusCode: StatusCodes.Status401Unauthorized,
+                title: result.FirstError.Description
+            );
+        }
 
-        return Ok(response);
+        return result.Match(authResult => Ok(MapAuthResult(authResult)), errors => Problem(errors));
     }
 }

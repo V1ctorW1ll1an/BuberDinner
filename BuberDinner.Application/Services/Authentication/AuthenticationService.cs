@@ -1,8 +1,8 @@
-using BuberDinner.Application.Common.Errors;
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Domain.Entities;
-using FluentResults;
+using BuberDinner.Domain.Common.Errors;
+using ErrorOr;
 
 namespace BuberDinner.Application.Services.Authentication;
 
@@ -17,18 +17,18 @@ public class AuthenticationService : IAuthenticationService
         _userRepository = userRepository;
     }
 
-    public AuthenticationResult Login(string email, string password)
+    public ErrorOr<AuthenticationResult> Login(string email, string password)
     {
         // check if user exists
         if (_userRepository.GetUserByEmail(email) is not User user)
         {
-            throw new Exception("Invalid email or password");
+            return Errors.Authentication.InvalidCredentials;
         }
 
         // check password
         if (user.Password != password)
         {
-            throw new Exception("Invalid email or password");
+            return Errors.Authentication.InvalidCredentials;
         }
 
         // generate token
@@ -38,7 +38,7 @@ public class AuthenticationService : IAuthenticationService
         return new AuthenticationResult(user, token);
     }
 
-    public Result<AuthenticationResult> Register(
+    public ErrorOr<AuthenticationResult> Register(
         string firstName,
         string lastName,
         string email,
@@ -48,7 +48,7 @@ public class AuthenticationService : IAuthenticationService
         // check if user exists
         if (_userRepository.GetUserByEmail(email) is not null)
         {
-            return Result.Fail<AuthenticationResult>(new[] { new UserAlreadyExistsError() });
+            return Errors.User.EmailAlreadyExists;
         }
         // create user (unique id) and Persist in Db
         var user = new User
