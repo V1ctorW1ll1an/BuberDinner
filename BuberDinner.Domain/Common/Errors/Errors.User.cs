@@ -6,7 +6,7 @@ public static partial class Errors
 {
     public static class User
     {
-        public static Error EmailAlreadyExists =>
-            Error.Conflict(code: "User.EmailAlreadyExists", description: "Email already exists");
+        public static Error UserAlreadyExists =>
+            Error.Conflict(code: "User.UserAlreadyExists", description: "User already exists");
     }
 }

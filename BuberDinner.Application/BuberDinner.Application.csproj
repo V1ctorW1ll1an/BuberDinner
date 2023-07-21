@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Authentication\" />
@@ -21,6 +23,7 @@
     <None Remove="Authentication\Queries\" />
     <None Remove="Authentication\Queries\Login\" />
     <None Remove="Authentication\Common\" />
+    <None Remove="Common\Behaviors\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
@@ -29,5 +32,6 @@
     <Folder Include="Authentication\Queries\" />
     <Folder Include="Authentication\Queries\Login\" />
     <Folder Include="Authentication\Common\" />
+    <Folder Include="Common\Behaviors\" />
   </ItemGroup>
 </Project>

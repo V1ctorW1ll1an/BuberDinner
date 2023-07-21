@@ -25,7 +25,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         // check if user exists
         if (_userRepository.GetUserByEmail(command.Email) is not null)
         {
-            return Errors.User.EmailAlreadyExists;
+            return Errors.User.UserAlreadyExists;
         }
         // create user (unique id) and Persist in Db
         var user = new User
