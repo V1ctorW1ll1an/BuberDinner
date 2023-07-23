@@ -4,14 +4,12 @@ using BuberDinner.Application.Authentication.Common;
 using ErrorOr;
 using MediatR;
 using BuberDinner.Domain.Common.Errors;
-using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.User;
 
 namespace BuberDinner.Application.Authentication.Queries.Login;
 
-
 public class LoginHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
-
     private readonly IJwtTokenGenerator _tokenGenerator;
     private readonly IUserRepository _userRepository;
 
@@ -21,28 +19,33 @@ public class LoginHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationRe
         _userRepository = userRepository;
     }
 
-    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+    public Task<ErrorOr<AuthenticationResult>> Handle(
+        LoginQuery query,
+        CancellationToken cancellationToken
+    )
     {
         // check if user exists
         if (_userRepository.GetUserByEmail(query.Email) is not User user)
         {
-            return Errors.Authentication.InvalidCredentials;
+            return Task.FromResult<ErrorOr<AuthenticationResult>>(
+                Errors.Authentication.InvalidCredentials
+            );
         }
 
         // check password
         if (user.Password != query.Password)
         {
-            return Errors.Authentication.InvalidCredentials;
+            return Task.FromResult<ErrorOr<AuthenticationResult>>(
+                Errors.Authentication.InvalidCredentials
+            );
         }
 
         // generate token
         var token = _tokenGenerator.GenerateToken(user);
 
         // set token
-        return new AuthenticationResult(user, token);
+        return Task.FromResult<ErrorOr<AuthenticationResult>>(
+            new AuthenticationResult(user, token)
+        );
     }
 }
-
-
-
-

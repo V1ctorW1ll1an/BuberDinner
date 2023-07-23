@@ -3,14 +3,14 @@ using ErrorOr;
 using MediatR;
 using BuberDinner.Domain.Common.Errors;
 using BuberDinner.Application.Common.Interfaces.Authentication;
-using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.User;
 using BuberDinner.Application.Authentication.Common;
 
 namespace BuberDinner.Application.Authentication.Commands.Register;
 
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
+public class RegisterCommandHandler
+    : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
-
     private readonly IJwtTokenGenerator _tokenGenerator;
     private readonly IUserRepository _userRepository;
 
@@ -20,12 +20,15 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         _userRepository = userRepository;
     }
 
-    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
+    public Task<ErrorOr<AuthenticationResult>> Handle(
+        RegisterCommand command,
+        CancellationToken cancellationToken
+    )
     {
         // check if user exists
         if (_userRepository.GetUserByEmail(command.Email) is not null)
         {
-            return Errors.User.UserAlreadyExists;
+            return Task.FromResult<ErrorOr<AuthenticationResult>>(Errors.User.UserAlreadyExists);
         }
         // create user (unique id) and Persist in Db
         var user = new User
@@ -40,8 +43,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         // generate token
         var token = _tokenGenerator.GenerateToken(user);
-        return new AuthenticationResult(user, token);
+        return Task.FromResult<ErrorOr<AuthenticationResult>>(
+            new AuthenticationResult(user, token)
+        );
     }
 }
-
-
