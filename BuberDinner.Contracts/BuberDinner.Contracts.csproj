@@ -9,4 +9,10 @@
   <ItemGroup>
       <ProjectReference Include="..\BuberDinner.Domain\BuberDinner.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Menu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Menu\" />
+  </ItemGroup>
 </Project>

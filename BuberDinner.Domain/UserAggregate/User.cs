@@ -1,4 +1,4 @@
-namespace BuberDinner.Domain.User;
+namespace BuberDinner.Domain.UserAggregate;
 
 public class User
 {
