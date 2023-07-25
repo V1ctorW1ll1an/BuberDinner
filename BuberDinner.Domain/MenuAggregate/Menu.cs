@@ -1,6 +1,7 @@
 using BuberDinner.Domain.Common.Models;
 using BuberDinner.Domain.Common.ValueObjects;
 using BuberDinner.Domain.DinnerAggregate.ValueObjects;
+using BuberDinner.Domain.HostAggregate.ValueObjects;
 using BuberDinner.Domain.Menu.Entities;
 using BuberDinner.Domain.Menu.ValueObjects;
 using BuberDinner.Domain.MenuReviewAggregate.ValueObjects;
@@ -14,7 +15,7 @@ public sealed class Menu : AggregateRoot<MenuId>
     private readonly List<MenuReviewId> _menuReviewIds = new();
     public string Name { get; }
     public string Description { get; }
-    public AverageRating AverageRating { get; }
+    public AverageRating? AverageRating { get; }
     public IReadOnlyList<MenuSection> Sections => _sections.AsReadOnly();
     public IReadOnlyList<DinnerId> DinnerIds => _dinnerIds.AsReadOnly();
     public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds.AsReadOnly();
@@ -25,36 +26,28 @@ public sealed class Menu : AggregateRoot<MenuId>
         MenuId id,
         string name,
         string description,
-        AverageRating averageRating,
-        DateTime createdDateTime,
-        DateTime updatedDateTime
+        List<MenuSection> sections
     )
         : base(id)
     {
         Name = name;
         Description = description;
-        AverageRating = averageRating;
-        CreatedDateTime = createdDateTime;
-        UpdatedDateTime = updatedDateTime;
+        _sections = sections;
     }
 
     public static Menu Create(
+        HostId hostId,
         string name,
         string description,
-        AverageRating averageRating,
-        DateTime createdDateTime,
-        DateTime updatedDateTime
+        List<MenuSection> sections
     )
     {
-        var menu = new Menu(
-            MenuId.CreateUnique(),
-            name,
-            description,
-            averageRating,
-            createdDateTime,
-            updatedDateTime
-        );
+        return new Menu(
+             MenuId.Create(),
+             name,
+             description,
+                sections
 
-        return menu;
+         );
     }
 }

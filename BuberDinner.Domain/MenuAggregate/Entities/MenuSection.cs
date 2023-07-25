@@ -19,7 +19,6 @@ public sealed class MenuSection : Entity<MenuSectionId>
     }
 
     public static MenuSection Create(
-        MenuSectionId menuSectionId,
         string name,
         string description
     ) => new(MenuSectionId.CreateUnique(), name, description);
